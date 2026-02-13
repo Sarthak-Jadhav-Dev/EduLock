@@ -32,7 +32,7 @@ export function AuthPage() {
             setStep('otp');
         } catch (err: any) {
             console.error(err);
-            setError(err.response?.data?.message || 'Failed to send OTP');
+            setError(err.response?.data?.error || 'Failed to send OTP');
         } finally {
             setLoading(false);
         }
@@ -44,19 +44,22 @@ export function AuthPage() {
         setError('');
         try {
             const data = await verifyOtp(email, otp);
-            localStorage.setItem('token', data.token); // Assuming token is returned
-            // Check if profile completion is needed based on API response if available, 
-            // otherwise redirect to dashboard or a check-auth page
-            if (data.isNewUser) { // Hypothetical flag, adjust based on actual API
-                router.push('/complete-profile');
-            } else {
+            if (data.token) {
+                // Existing user: login success
+                localStorage.setItem('token', data.token);
+                if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
                 router.push('/dashboard');
             }
-            // For now, default to dashboard, but complete-profile handling is next task
-            // router.push('/dashboard'); 
         } catch (err: any) {
             console.error(err);
-            setError(err.response?.data?.message || 'Invalid OTP');
+            if (err.response?.data?.needProfile) {
+                // New user: store email & otp so complete-profile page can register
+                localStorage.setItem('pendingEmail', email);
+                localStorage.setItem('pendingOtp', otp);
+                router.push('/complete-profile');
+            } else {
+                setError(err.response?.data?.error || 'Invalid OTP');
+            }
         } finally {
             setLoading(false);
         }

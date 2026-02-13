@@ -11,7 +11,7 @@ export const uploadMaterial = async (data: FormData) => {
 
 export const getMaterials = async (classId: string | number) => {
     const response = await api.get(`/material/${classId}`);
-    return response.data;
+    return response.data.materials;
 };
 
 export const deleteMaterial = async (id: string | number) => {

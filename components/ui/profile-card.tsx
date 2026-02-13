@@ -12,7 +12,7 @@ export function ProfileCard({ user }: ProfileCardProps) {
     const [expProgress, setExpProgress] = useState(0)
 
     // Defaults if user is null (though page should handle loading)
-    const name = user?.fullName || "User Name";
+    const name = user?.name || "User Name";
     const title = user?.role ? `${user.role} - ${user.department || "General"}` : "Student";
     const avatarUrl = user?.avatarUrl || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=800&auto=format&fit=crop&q=60";
     const backgroundUrl = "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&auto=format&fit=crop&q=60";

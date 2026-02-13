@@ -72,7 +72,7 @@ export default function DashboardPage() {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-                        <p className="text-muted-foreground">Welcome back, {user?.fullName}</p>
+                        <p className="text-muted-foreground">Welcome back, {user?.name}</p>
                     </div>
 
                     <Button
@@ -104,7 +104,7 @@ export default function DashboardPage() {
                                     id={cls.id}
                                     name={cls.name}
                                     subject={cls.subject}
-                                    teacher={cls.teacher?.fullName || cls.teacher || "Unknown Teacher"}
+                                    teacher={cls.teacher?.name || cls.teacher || "Unknown Teacher"}
                                     studentCount={cls._count?.students || cls.studentCount || 0}
                                     color={cls.color || getClassColor(index)}
                                 />

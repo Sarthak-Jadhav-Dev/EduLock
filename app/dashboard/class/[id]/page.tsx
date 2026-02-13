@@ -43,7 +43,7 @@ export default function ClassDetailsPage() {
     const fetchData = useCallback(async () => {
         if (!classId) return;
         try {
-            const [userData, studentsData, materialsData, announcementsData, assignmentsData, pollsData, myClasses] = await Promise.all([
+            const results = await Promise.allSettled([
                 getMe(),
                 getClassStudents(classId),
                 getMaterials(classId),
@@ -53,86 +53,118 @@ export default function ClassDetailsPage() {
                 getMyClasses()
             ]);
 
-            setUser(userData);
+            const [
+                userRes,
+                studentsRes,
+                materialsRes,
+                announcementsRes,
+                assignmentsRes,
+                pollsRes,
+                myClassesRes
+            ] = results;
+
+            // Set User
+            if (userRes.status === "fulfilled") setUser(userRes.value);
 
             // Find class details
-            const currentClass = myClasses?.find((c: any) => c.id === Number(classId) || c.id === classId);
+            const myClasses = myClassesRes.status === "fulfilled" ? myClassesRes.value : [];
+            console.log("Searching for classId:", classId, typeof classId);
+            console.log("Available myClasses IDs:", myClasses?.map((c: any) => `${c.id} (${typeof c.id})`));
+
+            const currentClass = myClasses?.find((c: any) => String(c.id) === String(classId));
+            console.log("Matched currentClass:", currentClass);
+
             if (currentClass) {
+                console.log("Found raw join code:", currentClass.join_code || currentClass.joinCode);
                 setClassData({
                     name: currentClass.name,
                     subject: currentClass.subject,
-                    teacher: currentClass.teacher?.fullName || currentClass.teacher || "Unknown Teacher",
-                    description: currentClass.description
+                    teacher: currentClass.teacher?.name || currentClass.teacher || "Unknown Teacher",
+                    description: currentClass.description,
+                    joinCode: currentClass.join_code || currentClass.joinCode,
                 });
             } else {
-                console.warn("Class not found in myClasses");
-                // Fallback or could be a 404
-                setClassData({ name: "Unknown Class", subject: "Unknown", teacher: "Unknown" });
+                console.warn("Class ID not found in myClasses list.");
+                setClassData({
+                    name: "Class Not Found",
+                    subject: "Access Denied or Invalid ID",
+                    teacher: "None"
+                });
             }
 
             // Map Students
-            const mappedStudents = (studentsData || []).map((s: any) => ({
-                id: s.id,
-                name: s.fullName || "Unknown",
-                email: s.email,
-                joinedDate: new Date(s.joinedAt || Date.now()).toLocaleDateString(),
-                status: "Active", // Default to Active
-                avatar: s.avatarUrl
-            }));
-            setStudents(mappedStudents);
+            if (studentsRes.status === "fulfilled") {
+                const mappedStudents = (studentsRes.value || []).map((s: any) => ({
+                    id: s.id,
+                    name: s.name || "Unknown",
+                    email: s.email,
+                    joinedDate: new Date(s.joined_at || s.joinedAt || Date.now()).toLocaleDateString(),
+                    status: "Active",
+                    avatar: s.avatar_url || s.avatarUrl
+                }));
+                setStudents(mappedStudents);
+            }
 
             // Map Materials
-            const mappedMaterials = (materialsData || []).map((m: any) => ({
-                id: m.id,
-                title: m.title,
-                description: m.description,
-                type: m.type || "Document",
-                date: new Date(m.createdAt).toLocaleDateString(),
-                url: m.fileUrl
-            }));
-            setMaterials(mappedMaterials);
+            if (materialsRes.status === "fulfilled") {
+                const mappedMaterials = (materialsRes.value || []).map((m: any) => ({
+                    id: m.id,
+                    title: m.title,
+                    description: m.description,
+                    type: m.type || "Document",
+                    date: new Date(m.created_at || m.createdAt).toLocaleDateString(),
+                    url: m.fileUrl
+                }));
+                setMaterials(mappedMaterials);
+            }
 
             // Map Announcements
-            const mappedAnnouncements = (announcementsData || []).map((a: any) => ({
-                id: a.id,
-                title: "Announcement", // API might not separate title
-                content: a.message,
-                author: a.author?.fullName || "Teacher",
-                authorAvatar: a.author?.avatarUrl,
-                date: new Date(a.createdAt)
-            }));
-            setAnnouncements(mappedAnnouncements);
+            if (announcementsRes.status === "fulfilled") {
+                const mappedAnnouncements = (announcementsRes.value || []).map((a: any) => ({
+                    id: a.id,
+                    title: "Announcement",
+                    content: a.message,
+                    author: a.author?.name || "Teacher",
+                    authorAvatar: a.author?.avatar_url || a.author?.avatarUrl,
+                    date: new Date(a.created_at || a.createdAt)
+                }));
+                setAnnouncements(mappedAnnouncements);
+            }
 
             // Map Assignments
-            const mappedAssignments = (assignmentsData || []).map((a: any) => ({
-                id: a.id,
-                title: a.title,
-                description: a.description,
-                dueDate: new Date(a.deadline).toLocaleDateString(),
-                points: a.points || 100,
-                status: new Date(a.deadline) < new Date() ? "Closed" : "Open" // Simple logic
-            }));
-            setAssignments(mappedAssignments);
+            if (assignmentsRes.status === "fulfilled") {
+                const mappedAssignments = (assignmentsRes.value || []).map((a: any) => ({
+                    id: a.id,
+                    title: a.title,
+                    description: a.description,
+                    dueDate: new Date(a.deadline).toLocaleDateString(),
+                    points: a.points || 100,
+                    status: new Date(a.deadline) < new Date() ? "Closed" : "Open"
+                }));
+                setAssignments(mappedAssignments);
+            }
 
             // Map Polls
-            const mappedPolls = (pollsData || []).map((p: any) => {
-                const totalVotes = p.options.reduce((sum: number, opt: any) => sum + (opt.votes || 0), 0);
-                return {
-                    id: p.id,
-                    question: p.question,
-                    options: p.options.map((o: any) => ({
-                        id: o.id || o._id, // Handle potential MongoDB _id
-                        text: o.text,
-                        votes: o.votes || 0
-                    })),
-                    totalVotes,
-                    userVoted: p.userVoted // API needs to return this
-                };
-            });
-            setPolls(mappedPolls);
+            if (pollsRes.status === "fulfilled") {
+                const mappedPolls = (pollsRes.value || []).map((p: any) => {
+                    const totalVotes = p.options?.reduce((sum: number, opt: any) => sum + (opt.votes || 0), 0) || 0;
+                    return {
+                        id: p.id,
+                        question: p.question,
+                        options: p.options?.map((o: any) => ({
+                            id: o.id || o._id,
+                            text: o.text,
+                            votes: o.votes || 0
+                        })) || [],
+                        totalVotes,
+                        userVoted: p.userVoted
+                    };
+                });
+                setPolls(mappedPolls);
+            }
 
         } catch (error) {
-            console.error("Failed to fetch class details:", error);
+            console.error("Critical error in fetchData:", error);
         } finally {
             setLoading(false);
         }
@@ -170,6 +202,8 @@ export default function ClassDetailsPage() {
                     teacher={classData?.teacher || "Teacher"} // API needs to return this
                     studentCount={students.length}
                     coverImage="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&auto=format&fit=crop&q=80"
+                    joinCode={classData?.joinCode}
+                    role={isTeacher ? "teacher" : "student"}
                 />
 
                 <div className="mt-8">

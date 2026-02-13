@@ -10,14 +10,17 @@ export const verifyOtp = async (email: string, otp: string) => {
     return response.data;
 };
 
-export const completeProfile = async (data: {
-    fullName: string;
+export const registerWithOtp = async (data: {
+    email: string;
+    otp: string;
+    name: string;
+    phone: string;
     role: string;
+    registrationId: string;
     rollNo?: string;
     division?: string;
     department?: string;
-    phone?: string;
 }) => {
-    const response = await api.post('/auth/complete-profile', data);
+    const response = await api.post('/auth/verify-otp', data);
     return response.data;
 };

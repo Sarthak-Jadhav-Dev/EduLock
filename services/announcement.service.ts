@@ -7,5 +7,5 @@ export const createAnnouncement = async (data: { classId: number | string; messa
 
 export const getAnnouncements = async (classId: number | string) => {
     const response = await api.get(`/announce/${classId}`);
-    return response.data;
+    return response.data.announcements;
 };

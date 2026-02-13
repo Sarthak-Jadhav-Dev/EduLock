@@ -12,10 +12,10 @@ export const joinClass = async (data: { joinCode: string }) => {
 
 export const getMyClasses = async () => {
     const response = await api.get('/class/my');
-    return response.data;
+    return response.data.classes;
 };
 
 export const getClassStudents = async (classId: string | number) => {
     const response = await api.get(`/class/${classId}/students`);
-    return response.data;
+    return response.data.students;
 };

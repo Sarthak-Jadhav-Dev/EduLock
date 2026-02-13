@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { completeProfile } from '@/services/auth.service';
+import { registerWithOtp } from '@/services/auth.service';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -17,14 +17,32 @@ import { Loader2 } from 'lucide-react';
 export default function CompleteProfilePage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
     const [formData, setFormData] = useState({
-        fullName: '',
+        name: '',
         role: '',
+        registrationId: '',
         rollNo: '',
         division: '',
         department: '',
         phone: '',
     });
+
+    // Read pending email/otp from localStorage (stored during the verify-otp call)
+    const [pendingEmail, setPendingEmail] = useState('');
+    const [pendingOtp, setPendingOtp] = useState('');
+
+    useEffect(() => {
+        const email = localStorage.getItem('pendingEmail');
+        const otp = localStorage.getItem('pendingOtp');
+        if (!email || !otp) {
+            // No pending registration — redirect back to login
+            router.push('/login');
+            return;
+        }
+        setPendingEmail(email);
+        setPendingOtp(otp);
+    }, [router]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,12 +55,31 @@ export default function CompleteProfilePage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+        setError('');
         try {
-            await completeProfile(formData);
-            router.push('/dashboard');
-        } catch (error) {
-            console.error('Failed to complete profile:', error);
-            // Handle error (e.g., show toast)
+            const data = await registerWithOtp({
+                email: pendingEmail,
+                otp: pendingOtp,
+                name: formData.name,
+                phone: formData.phone,
+                role: formData.role,
+                registrationId: formData.registrationId,
+                rollNo: formData.rollNo || undefined,
+                division: formData.division,
+                department: formData.department,
+            });
+
+            if (data.token) {
+                localStorage.setItem('token', data.token);
+                if (data.user) localStorage.setItem('user', JSON.stringify(data.user));
+                // Clean up pending data
+                localStorage.removeItem('pendingEmail');
+                localStorage.removeItem('pendingOtp');
+                router.push('/dashboard');
+            }
+        } catch (err: any) {
+            console.error('Failed to complete profile:', err);
+            setError(err.response?.data?.error || 'Registration failed. Please try again.');
         } finally {
             setLoading(false);
         }
@@ -59,13 +96,20 @@ export default function CompleteProfilePage() {
                         Please provide your details to continue.
                     </p>
                 </div>
+
+                {error && (
+                    <div className="bg-red-50 text-red-500 text-sm p-2 rounded-md">
+                        {error}
+                    </div>
+                )}
+
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="space-y-4">
                         <div>
                             <Input
-                                name="fullName"
+                                name="name"
                                 placeholder="Full Name"
-                                value={formData.fullName}
+                                value={formData.name}
                                 onChange={handleChange}
                                 required
                             />
@@ -81,6 +125,15 @@ export default function CompleteProfilePage() {
                                 </SelectContent>
                             </Select>
                         </div>
+                        <div>
+                            <Input
+                                name="registrationId"
+                                placeholder="Registration ID"
+                                value={formData.registrationId}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
                         {formData.role === 'student' && (
                             <>
                                 <div>
@@ -89,20 +142,19 @@ export default function CompleteProfilePage() {
                                         placeholder="Roll Number"
                                         value={formData.rollNo}
                                         onChange={handleChange}
-                                        required
-                                    />
-                                </div>
-                                <div>
-                                    <Input
-                                        name="division"
-                                        placeholder="Division"
-                                        value={formData.division}
-                                        onChange={handleChange}
-                                        required
                                     />
                                 </div>
                             </>
                         )}
+                        <div>
+                            <Input
+                                name="division"
+                                placeholder="Division"
+                                value={formData.division}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
                         <div>
                             <Input
                                 name="department"

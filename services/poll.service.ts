@@ -16,5 +16,5 @@ export const votePoll = async (data: { pollId: number | string; optionId: number
 
 export const getPolls = async (classId: number | string) => {
     const response = await api.get(`/poll/${classId}`);
-    return response.data;
+    return response.data.polls;
 };

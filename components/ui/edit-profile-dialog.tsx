@@ -52,7 +52,7 @@ export default function EditProfileDialog({ user, onSuccess }: EditProfileDialog
 
         const formData = new FormData(e.currentTarget);
         const data = {
-            fullName: formData.get("fullName") as string,
+            name: formData.get("name") as string,
             email: formData.get("email") as string, // Usually email is not updatable or requires verification
             bio: formData.get("bio") as string,
             // Add other fields as necessary, typically user endpoints might limit what can be updated
@@ -114,7 +114,7 @@ export default function EditProfileDialog({ user, onSuccess }: EditProfileDialog
                         <div className="flex flex-col sm:flex-row gap-4">
                             <div className="flex-1 space-y-1.5">
                                 <Label htmlFor={`${id}-name`}>Full Name</Label>
-                                <Input id={`${id}-name`} name="fullName" placeholder="E.g. John Doe" defaultValue={user?.fullName} />
+                                <Input id={`${id}-name`} name="name" placeholder="E.g. John Doe" defaultValue={user?.name} />
                             </div>
                             <div className="flex-1 space-y-1.5">
                                 <Label htmlFor={`${id}-role`}>Role</Label>
