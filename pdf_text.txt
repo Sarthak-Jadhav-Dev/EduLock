@@ -1,0 +1,197 @@
+EduLock — Secure Educational Content Distribution Platform  
+ 
+ 
+ 
+Technical Workflow and System Documentation  
+ 
+1. System Overview  
+EduLock  is a secure educational content distribution platform designed to prevent unauthorized access, 
+sharing, and piracy of digital academic materials. The system ensures that educational files are encrypted, 
+access -controlled, and viewable only within a secure  environment.  
+The platform uses strong encryption, role -based access control, secure authentication, and device binding to 
+protect intellectual property and maintain controlled distribution of educational content.  
+ 
+2.  System Architecture  
+EduLock follows a three -tier architecture : 
+2.1 Presentation Layer (Frontend)  
+• Built using React.js or similar frameworks.  
+• Provides teacher and student dashboards.  
+• Handles secure file viewing.  
+• Sends requests to backend APIs.  
+• Prevents unauthorized actions (copy, download, screen capture attempts).  
+Components:  
+• Login Interface  
+• Teacher Dashboard  
+• Student Dashboard  
+• Secure Content Viewer  
+ 
+2.2 Application Layer (Backend Server)  
+• Handles authentication and authorization.  
+• Processes file encryption and decryption.  
+• Manages classrooms and user roles.  
+• Verifies device binding and session validity.  
+• Communicates with database and cloud storage.  
+Modules:  
+• Authentication Service (JWT)  
+• File Encryption Service  
+• Access Control Manager  
+• Key Management Service (KMS)  
+• Activity Monitoring System  
+ EduLock — Secure Educational Content Distribution Platform  
+ 
+ 
+ 
+ 
+2.3 Data Layer (Storage & Database)  
+• Stores encrypted files.  
+• Maintains user data and classroom information.  
+• Stores access logs and activity records.  
+Storage Components:  
+• Cloud Storage (AWS S3 / Firebase)  
+• Database (MySQL / MongoDB)  
+ 
+3.  Secure Content Distribution Workflow  
+The EduLock system follows a secure multi -step workflow to protect educational content.  
+ 
+3.1 Teacher Content Upload Process  
+1. Teacher logs into system using secure authentication.  
+2. Teacher uploads educational files (PDF, PPT, Video).  
+3. Backend validates file and user permissions.  
+4. File is encrypted using AES -256 encryption.  
+5. File is converted into proprietary .edulock format.  
+6. Encrypted file is stored in cloud storage.  
+7. File is mapped to classroom access permissions.  
+Outcome:  
+Only encrypted content exists in storage.  
+ 
+3.2 Student Content Access Process  
+1. Student logs in using institutional credentials.  
+2. System verifies identity using JWT authentication.  
+3. Student requests file access through secure viewer.  
+4. Server checks:  
+o Classroom membership  
+o Device registration  
+o Active session  
+5. If authorized, system grants temporary access.  
+Outcome:  
+Only authorized users proceed to file viewing.  
+ 
+ EduLock — Secure Educational Content Distribution Platform  
+ 
+ 
+3.3 Secure File Viewing Process  
+1. Secure viewer fetches encrypted .edulock file.  
+2. Viewer requests temporary decryption key from KMS.  
+3. Server verifies access rights.  
+4. Server sends short -lived decryption key.  
+5. File is decrypted in memory (RAM only).  
+6. Content is rendered using secure viewer.  
+7. No decrypted file is stored on device.  
+Outcome:  
+Content remains protected even after access.  
+ 
+4.  Security Mechanisms  
+EduLock integrates multiple security layers:  
+4.1 Encryption  
+• AES-256 encryption for file protection.  
+• RSA encryption for key exchange.  
+4.2 Authentication  
+• JWT-based secure login.  
+• Role -based access control (Teacher, Student).  
+4.3 Device Binding  
+• Content accessible only on registered devices.  
+• Prevents forwarding across systems.  
+4.4 Secure File Format  
+• Proprietary .edulock format.  
+• Prevents external file usage.  
+4.5 Secure Viewing Environment  
+• Right -click disable.  
+• Copy -paste restriction.  
+• Tab-switch detection.  
+• Screen capture protection.  
+4.6 Dynamic Watermarking  
+• Displays user identity on content.  
+• Prevents misuse.  
+4.7 Activity Logging  
+• Tracks suspicious actions.  
+• Records user behavior.  
+ EduLock — Secure Educational Content Distribution Platform  
+ 
+ 
+5. Key Management System (KMS)  
+The Key Management System controls encryption keys.  
+Functions:  
+• Generates encryption keys.  
+• Issues temporary decryption keys.  
+• Verifies user authorization.  
+• Revokes access when permissions change.  
+Features:  
+• Short -lived keys.  
+• Secure storage.  
+• Automatic key expiration.  
+ 
+6.  Access Control Model  
+EduLock uses hierarchical access control.  
+Teacher → Classroom → Students  
+• Teachers manage classroom membership.  
+• Students access only assigned content.  
+• Permissions dynamically updated.  
+7. System Components  
+7.1 User Management System  
+• User registration and authentication.  
+• Role assignment.  
+7.2 Classroom Management  
+• Create classroom groups.  
+• Assign students.  
+7.3 File Processing Module  
+• File encryption.  
+• Format conversion.  
+7.4 Secure Viewer  
+• Displays protected content.  
+• Prevents external storage.  
+7.5 Monitoring System  
+• Tracks usage and security violations.  
+ 
+8. Conclusion  
+EduLock  provides a comprehensive solution for secure educational content distribution by integrating 
+encryption, access control, and secure viewing technologies. The platform ensures content protection, EduLock — Secure Educational Content Distribution Platform  
+ 
+ 
+controlled access, and improved digital learning security, making it highly suitable for modern educational 
+institutions.   
+ 
+Screen shot of the prototype:  
+• POST /encrypt : The Teacher Upload Handler . It accepts raw files (PDF/Video), applies AES-256 encryption , 
+and saves them in the protected .edulock  format.  
+• POST /generate -token/{filename} : The Key Management (KMS)  endpoint. It generates a short -lived, one -
+time access token for a specific file, ensuring that links cannot be shared or reused.  
+• GET /stream/{token} : The Secure Viewer Endpoint . It accepts the valid token, decrypts the content in 
+memory (RAM), and streams it in chunks  to the frontend (preventing full file downloads).  
+ 
+ 
+   
+EduLock — Secure Educational Content Distribution Platform  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Verification Mail:  
+ 

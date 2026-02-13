@@ -242,31 +242,31 @@ function HeroOrbitDeck() {
     );
 
     const metrics = [
-        { label: "Average ramp", value: "11d" },
-        { label: "Cycles synced", value: "08" },
-        { label: "Satisfaction", value: "96%" },
+        { label: "Encryption", value: "AES-256" },
+        { label: "Files Secured", value: "10K+" },
+        { label: "Uptime", value: "99.9%" },
     ];
 
     const modes = useMemo(
         () => ({
             strategy: {
-                title: "Strategy signal",
+                title: "Teacher Upload Process",
                 description:
-                    "Frame the launch protocol with clarity, align stakeholders in monochrome calm, and freeze decisive signals in under two screens.",
+                    "Teachers upload educational files (PDF, PPT, Video). The backend validates permissions, encrypts with AES-256, converts to proprietary .edulock format, and stores securely in the cloud.",
                 items: [
-                    "Narrative arcs mapped to delivery windows",
-                    "Artifacts pre-styled in b/w for speed",
-                    "Decision rails surfaced inline",
+                    "Files encrypted with AES-256 on upload",
+                    "Converted to proprietary .edulock format",
+                    "Mapped to classroom access permissions",
                 ],
             },
             execution: {
-                title: "Execution loop",
+                title: "Student Access Process",
                 description:
-                    "Deploy orchestration cues, sync distributed crews, and keep response telemetry visible without disrupting minimal aesthetics.",
+                    "Students authenticate, request file access through the secure viewer. The system verifies classroom membership, device registration, and active session before granting temporary access.",
                 items: [
-                    "Runtime monitors threaded into hero",
-                    "Edge deployment slots enumerated",
-                    "Escalation ladder surfaced in-line",
+                    "JWT-based secure authentication",
+                    "Device binding verification",
+                    "Short-lived decryption keys from KMS",
                 ],
             },
         }),
@@ -277,18 +277,18 @@ function HeroOrbitDeck() {
 
     const protocols = [
         {
-            name: "Signal intake",
-            detail: "Audit the surface, define pulse cadence, ingest context in 24h.",
-            status: "Ready",
+            name: "File Encryption",
+            detail: "Upload raw files, apply AES-256 encryption, save in protected .edulock format.",
+            status: "Active",
         },
         {
-            name: "Orbit sync",
-            detail: "Cross-discipline huddle, assign vectors, prime release toggles.",
-            status: "Armed",
+            name: "Access Verification",
+            detail: "Verify classroom membership, device registration, and session validity.",
+            status: "Secured",
         },
         {
-            name: "Launch window",
-            detail: "Go/no-go checks, activate uplink, monitor stability in realtime.",
+            name: "Secure Streaming",
+            detail: "Decrypt in memory, stream content in chunks. No file stored on device.",
             status: "Live",
         },
     ];
@@ -350,7 +350,7 @@ function HeroOrbitDeck() {
                     <div className="space-y-8">
                         <div className="flex flex-wrap items-center gap-4">
                             <span className={`inline-flex items-center gap-2 rounded-full border px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.4em] ${palette.border} ${palette.accent}`}>
-                                Monochrome Hero Deck
+                                Secure Content Platform
                             </span>
                             <button
                                 type="button"
@@ -362,20 +362,20 @@ function HeroOrbitDeck() {
                         </div>
                         <div className="space-y-6">
                             <h1 className="text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
-                                HERO3: command deck for launches that demand monochrome precision.
+                                EduLock: Secure distribution for educational content that demands protection.
                             </h1>
                             <p className={`max-w-2xl text-base md:text-lg ${palette.subtle}`}>
-                                A hero built to stage design systems, telemetry, and imagery in perfect grayscale. The deck combines live toggles, orbital overlays, and adaptive motion for a distinct library entry.
+                                A platform built to encrypt, control access, and securely deliver educational materials. Powered by AES-256 encryption, role-based access, and device binding.
                             </p>
                         </div>
                         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                             <div className={`inline-flex flex-wrap gap-3 rounded-full border px-5 py-3 text-xs uppercase tracking-[0.3em] transition ${palette.border} ${palette.accent}`}>
                                 <span className="flex items-center gap-2">
                                     <span className="h-1.5 w-1.5 rounded-full bg-current animate-pulse" />
-                                    Launch ready
+                                    System Active
                                 </span>
                                 <span className="opacity-60">∙</span>
-                                <span>Monochrome enforced</span>
+                                <span>End-to-End Encrypted</span>
                             </div>
                             <div className={`flex divide-x divide-white/10 overflow-hidden rounded-full border text-xs uppercase tracking-[0.35em] ${palette.border}`}>
                                 {metrics.map((metric) => (
@@ -404,7 +404,7 @@ function HeroOrbitDeck() {
                                 className={`flex-1 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition ${mode === "strategy" ? "bg-white text-black dark:bg-white/90 dark:text-black" : `${palette.border} ${palette.accent}`
                                     }`}
                             >
-                                Strategy
+                                Upload
                             </button>
                             <button
                                 type="button"
@@ -412,7 +412,7 @@ function HeroOrbitDeck() {
                                 className={`flex-1 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.35em] transition ${mode === "execution" ? "bg-white text-black dark:bg-white/90 dark:text-black" : `${palette.border} ${palette.accent}`
                                     }`}
                             >
-                                Execution
+                                Access
                             </button>
                         </div>
                         <ul className="space-y-2 text-sm">
@@ -429,14 +429,14 @@ function HeroOrbitDeck() {
                 <div className="grid gap-10 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.2fr)_minmax(0,0.9fr)] xl:items-stretch">
                     <div className={`order-2 flex flex-col gap-6 rounded-3xl border p-8 transition ${palette.border} ${palette.card} xl:order-1`}>
                         <div className="flex items-center justify-between">
-                            <h3 className="text-xs uppercase tracking-[0.35em]">Control stack</h3>
-                            <span className="text-xs uppercase tracking-[0.35em] opacity-60">v3.0</span>
+                            <h3 className="text-xs uppercase tracking-[0.35em]">Security Stack</h3>
+                            <span className="text-xs uppercase tracking-[0.35em] opacity-60">v1.0</span>
                         </div>
                         <p className={`text-sm leading-relaxed ${palette.subtle}`}>
-                            Designed for monochrome libraries where clarity outruns color. Craft a hero that introduces the system, shows live state, and frames imagery without losing contrast discipline.
+                            Designed for educational institutions where content protection is paramount. AES-256 file encryption, RSA key exchange, device binding, and dynamic watermarking in one secure system.
                         </p>
                         <div className="grid gap-3">
-                            {["Interface parity guaranteed", "Cross-theme neutral hues", "Motion tuned for calm focus"].map((item) => (
+                            {["AES-256 file encryption", "RSA key exchange protocol", "Dynamic user watermarking"].map((item) => (
                                 <div key={item} className="relative overflow-hidden rounded-2xl border px-4 py-3 text-xs uppercase tracking-[0.3em] transition duration-500 hover:-translate-y-0.5 hover:shadow-[0_14px_40px_rgba(0,0,0,0.18)] dark:hover:shadow-[0_14px_40px_rgba(0,0,0,0.45)]">
                                     <span>{item}</span>
                                     <span className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 hover:opacity-100" style={{ background: `radial-gradient(180px circle at 50% 20%, ${palette.glow}, transparent 70%)` }} />
@@ -459,17 +459,17 @@ function HeroOrbitDeck() {
                             <span className="pointer-events-none absolute -right-12 bottom-16 h-48 w-48 rounded-full border border-white/10 opacity-40 motion-safe:animate-[hero3-drift_12s_ease-in-out_infinite]" />
                         </div>
                         <figcaption className={`flex items-center justify-between px-6 py-5 text-xs uppercase tracking-[0.35em] ${palette.subtle}`}>
-                            <span>Archive composite</span>
+                            <span>Platform overview</span>
                             <span className="flex items-center gap-2">
                                 <span className="h-1 w-8 bg-current" />
-                                Layered monochrome
+                                Secure architecture
                             </span>
                         </figcaption>
                     </figure>
 
                     <aside className={`order-3 flex flex-col gap-6 rounded-3xl border p-8 transition ${palette.border} ${palette.card} xl:order-3`}>
                         <div className="flex items-center justify-between">
-                            <h3 className="text-xs uppercase tracking-[0.35em]">Launch protocols</h3>
+                            <h3 className="text-xs uppercase tracking-[0.35em]">Security Protocols</h3>
                             <span className="text-xs uppercase tracking-[0.35em] opacity-60">Indexed</span>
                         </div>
                         <ul className="space-y-4">

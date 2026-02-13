@@ -1,12 +1,12 @@
-import { Home, User, Briefcase, FileText } from 'lucide-react'
+import { Home, User, Shield, LogIn } from 'lucide-react'
 import { NavBar } from "@/components/ui/tubelight-navbar"
 
 export function NavBarDemo() {
     const navItems = [
         { name: 'Home', url: '/', icon: Home },
         { name: 'About', url: '/about', icon: User },
-        { name: 'Projects', url: '/projects', icon: Briefcase },
-        { name: 'Resume', url: '/resume', icon: FileText }
+        { name: 'Features', url: '/#free-tools', icon: Shield },
+        { name: 'Login', url: '/login', icon: LogIn }
     ]
 
     return <NavBar items={navItems} />

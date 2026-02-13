@@ -14,7 +14,7 @@ export default function ColorfulBentoGrid() {
                 <div className="flex flex-col my-12 w-full items-start justify-start gap-4">
                     <div className="flex flex-col md:flex-row gap-2 items-end w-full justify-between ">
                         <h2 className="relative text-4xl md:text-5xl font-display font-semibold max-w-xl text-left leading-[1em] text-base-content">
-                            Private client work, <br />{" "}
+                            Enterprise-Grade Security, <br />{" "}
                             <span>
                                 <Gift
                                     className="inline-flex text-accent-bento fill-accent-light rotate-12"
@@ -22,21 +22,19 @@ export default function ColorfulBentoGrid() {
                                     strokeWidth={2}
                                 />
                             </span>{" "}
-                            now public & free.
+                            Built for Education.
                         </h2>
                         <p className="max-w-sm font-semibold text-md text-neutral-bento/50">
-                            Working with us is like having an activation growth taskforce of a
-                            Data Scientist, PLG Advisor, & Behavioral Designer in-house.
-                            Always ready to go.
+                            AES-256 encryption, role-based access, device binding, and dynamic watermarking — all in one platform.
                         </p>
                     </div>
 
                     <div className="flex flex-row text-accent-bento gap-6 items-start justify-center">
                         <p className="text-base whitespace-nowrap font-medium">
-                            +1,000 Downloads
+                            AES-256 Encrypted
                         </p>
                         <p className="text-base whitespace-nowrap font-medium">
-                            Rated 5/5 by 100 Founders
+                            Role-Based Access Control
                         </p>
                     </div>
                 </div>
@@ -50,10 +48,10 @@ export default function ColorfulBentoGrid() {
                 >
                     <div className="relative flex flex-col items-start justify-center ml-4 gap-0 z-10">
                         <p className="-rotate-1 ml-4 mb-1 text-base-content font-medium">
-                            1,000 downloads
+                            Proprietary Format
                         </p>
                         <h3 className="-rotate-1 text-2xl whitespace-nowrap font-semibold text-center px-6 py-2 bg-base-content/90 text-white rounded-full shadow-lg">
-                            UX + Product-Led
+                            File Encryption & .edulock
                         </h3>
                     </div>
                     <div className="absolute right-0 bottom-0 top-0 w-3/5 h-full opacity-90 group-hover:scale-105 transition-transform duration-500">
@@ -73,9 +71,9 @@ export default function ColorfulBentoGrid() {
                     style={{ backgroundColor: "var(--color-hightlight-light)" }}
                 >
                     <div className="flex flex-col items-center justify-center gap-1 z-10">
-                        <p className="rotate-6 mb-1 text-base-content font-medium">10,000 uses</p>
+                        <p className="rotate-6 mb-1 text-base-content font-medium">RAM-Only Decryption</p>
                         <h3 className="rotate-6 text-2xl font-semibold text-center px-6 py-2 bg-base-content/90 text-white rounded-full shadow-lg">
-                            Growth Tools
+                            Secure Content Viewer
                         </h3>
                     </div>
 
@@ -96,10 +94,10 @@ export default function ColorfulBentoGrid() {
                 >
                     <div className="flex flex-col items-center justify-center gap-1 z-10">
                         <p className="-rotate-3 mb-1 text-base-content font-medium">
-                            106 Behavioral Principles
+                            Anti-Piracy Protection
                         </p>
                         <h3 className="-rotate-3 text-2xl font-semibold text-center px-6 py-2 bg-base-content/90 text-white rounded-full shadow-lg">
-                            Improve UX
+                            Device Binding & Watermarking
                         </h3>
                     </div>
                     <div className="absolute bottom-0 w-full h-[60%] opacity-90 group-hover:scale-110 transition-transform duration-500">
@@ -126,7 +124,7 @@ export default function ColorfulBentoGrid() {
                         />
                     </div>
                     <p className="-rotate-3 mb-1 text-base-content font-medium z-10">
-                        Blog & Guides
+                        Activity Monitoring
                     </p>
                     <h3 className="-rotate-3 text-2xl font-semibold text-center px-6 py-2 bg-white/75 rounded-full z-10 backdrop-blur-sm">
                         Coming Soon
@@ -146,7 +144,7 @@ export default function ColorfulBentoGrid() {
                             className="object-cover"
                         />
                     </div>
-                    <p className="rotate-6 mb-1 text-base-content font-medium z-10">Playbooks</p>
+                    <p className="rotate-6 mb-1 text-base-content font-medium z-10">Key Management System</p>
                     <h3 className="rotate-6 text-2xl font-semibold text-center px-6 py-2 bg-white/75 rounded-full z-10 backdrop-blur-sm">
                         Coming Soon
                     </h3>

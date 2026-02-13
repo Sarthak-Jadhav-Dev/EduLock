@@ -74,10 +74,10 @@ export function AuthPage() {
                     <blockquote className="space-y-2">
                         <p className="text-xl">
                             &ldquo;This Platform has helped me to save time and serve my
-                            clients faster than ever before.&rdquo;
+                            Student faster than ever before.&rdquo;
                         </p>
                         <footer className="font-mono text-sm font-semibold">
-                            ~ Ali Hassan
+                            ~ Best Teacher
                         </footer>
                     </blockquote>
                 </div>

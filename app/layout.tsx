@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Edu-Lock",
-  description: "Edu-Lock",
+  title: "EduLock — Secure Educational Content Distribution",
+  description: "EduLock prevents unauthorized access, sharing, and piracy of digital academic materials with AES-256 encryption and role-based access control.",
 };
 
 export default function RootLayout({

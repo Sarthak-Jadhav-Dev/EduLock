@@ -29,11 +29,11 @@ export default function AlertCardDemo() {
 
             <AlertCard
                 isVisible={isCardVisible}
-                title="Don't miss your flight"
-                description="Hi Jonathan, You have a flight today at 02:15 PM. Better to go early to avoid road traffic."
-                buttonText="Okay, I Understand"
+                title="Welcome to EduLock"
+                description="Your content is protected with end-to-end encryption. Upload materials, manage classes, and distribute securely."
+                buttonText="Got it!"
                 onButtonClick={handleUnderstood}
-                onDismiss={handleDismiss} // Provide dismiss handler to show the X button
+                onDismiss={handleDismiss}
                 icon={<Bell className="h-6 w-6 text-destructive-foreground" />}
             />
         </div>

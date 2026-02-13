@@ -63,7 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
                                     <span className="truncate font-semibold">EduLock</span>
-                                    <span className="truncate text-xs">Learning Platform</span>
+                                    <span className="truncate text-xs">Secure Content Platform</span>
                                 </div>
                             </a>
                         </SidebarMenuButton>

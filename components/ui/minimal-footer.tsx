@@ -14,15 +14,7 @@ export function MinimalFooter() {
     const company = [
         {
             title: 'About Us',
-            href: '#',
-        },
-        {
-            title: 'Careers',
-            href: '#',
-        },
-        {
-            title: 'Brand assets',
-            href: '#',
+            href: '/about',
         },
         {
             title: 'Privacy Policy',
@@ -36,7 +28,7 @@ export function MinimalFooter() {
 
     const resources = [
         {
-            title: 'Blog',
+            title: 'Documentation',
             href: '#',
         },
         {
@@ -48,11 +40,11 @@ export function MinimalFooter() {
             href: '#',
         },
         {
-            title: 'Community',
+            title: 'Security',
             href: '#',
         },
         {
-            title: 'Security',
+            title: 'Status Page',
             href: '#',
         },
     ];
@@ -93,7 +85,7 @@ export function MinimalFooter() {
                             <Grid2X2Plus className="size-8" />
                         </a>
                         <p className="text-muted-foreground max-w-sm font-mono text-sm text-balance">
-                            A comprehensive financial technology platform.
+                            Secure educational content distribution platform — prevent unauthorized access, sharing, and piracy of digital academic materials.
                         </p>
                         <div className="flex gap-2">
                             {socialLinks.map((item, i) => (
@@ -142,7 +134,7 @@ export function MinimalFooter() {
                 <div className="bg-border absolute inset-x-0 h-px w-full" />
                 <div className="flex max-w-4xl flex-col justify-between gap-2 pt-2 pb-5">
                     <p className="text-muted-foreground text-center font-thin">
-                        © <a href="https://x.com/sshahaider">sshahaider</a>. All rights
+                        © <a href="#">EduLock</a>. All rights
                         reserved {year}
                     </p>
                 </div>

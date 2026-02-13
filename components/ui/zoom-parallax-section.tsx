@@ -62,7 +62,7 @@ export default function ZoomParallaxSection() {
                     )}
                 />
                 <h1 className="text-center text-4xl font-bold">
-                    Scroll Down for Zoom Parallax
+                    See EduLock in Action
                 </h1>
             </div>
             <ZoomParallax images={images} />
