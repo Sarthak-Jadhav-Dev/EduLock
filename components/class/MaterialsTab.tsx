@@ -23,7 +23,7 @@ export const MaterialsTab = ({ materials, userEmail = "student@edulock.com", use
                 <SecureMaterialViewer
                     isOpen={!!selectedMaterial}
                     onClose={() => setSelectedMaterial(null)}
-                    materialUrl={selectedMaterial.url || ""}
+                    materialId={String(selectedMaterial.id)}
                     materialType={selectedMaterial.type}
                     materialTitle={selectedMaterial.title}
                     userEmail={userEmail}

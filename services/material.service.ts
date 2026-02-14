@@ -14,7 +14,13 @@ export const getMaterials = async (classId: string | number) => {
     return response.data.materials;
 };
 
+
 export const deleteMaterial = async (id: string | number) => {
     const response = await api.delete(`/material/${id}`);
+    return response.data;
+};
+
+export const viewMaterial = async (id: string | number) => {
+    const response = await api.get(`/material/view/${id}`);
     return response.data;
 };

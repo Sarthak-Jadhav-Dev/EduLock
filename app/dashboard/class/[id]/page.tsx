@@ -19,24 +19,7 @@ import { getAssignments } from "@/services/assignment.service";
 import { getPolls } from "@/services/poll.service";
 import { getMe } from "@/services/user.service";
 
-const DEMO_MATERIALS = [
-    {
-        id: "demo-pdf",
-        title: "Demo: Sample PDF Document",
-        description: "A sample PDF to test the secure viewer's page rendering and watermark.",
-        type: "PDF",
-        date: new Date().toLocaleDateString(),
-        url: "https://pdfobject.com/pdf/sample.pdf"
-    },
-    {
-        id: "demo-video",
-        title: "Demo: Big Buck Bunny Video",
-        description: "A sample video to test playback controls and security overlays.",
-        type: "Video",
-        date: new Date().toLocaleDateString(),
-        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-    }
-];
+
 
 export default function ClassDetailsPage() {
     const params = useParams();
@@ -134,9 +117,9 @@ export default function ClassDetailsPage() {
                     date: new Date(m.created_at || m.createdAt).toLocaleDateString(),
                     url: m.fileUrl
                 }));
-                setMaterials([...mappedMaterials, ...DEMO_MATERIALS] as any);
+                setMaterials(mappedMaterials as any);
             } else {
-                setMaterials(DEMO_MATERIALS as any);
+                setMaterials([] as any);
             }
 
             // Map Announcements
