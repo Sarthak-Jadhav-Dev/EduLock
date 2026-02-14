@@ -8,6 +8,18 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.bmwgroup.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.bmw.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gesrepair.com',
+      }
     ],
   },
 };

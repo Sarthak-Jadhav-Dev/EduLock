@@ -19,6 +19,25 @@ import { getAssignments } from "@/services/assignment.service";
 import { getPolls } from "@/services/poll.service";
 import { getMe } from "@/services/user.service";
 
+const DEMO_MATERIALS = [
+    {
+        id: "demo-pdf",
+        title: "Demo: Sample PDF Document",
+        description: "A sample PDF to test the secure viewer's page rendering and watermark.",
+        type: "PDF",
+        date: new Date().toLocaleDateString(),
+        url: "https://pdfobject.com/pdf/sample.pdf"
+    },
+    {
+        id: "demo-video",
+        title: "Demo: Big Buck Bunny Video",
+        description: "A sample video to test playback controls and security overlays.",
+        type: "Video",
+        date: new Date().toLocaleDateString(),
+        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+    }
+];
+
 export default function ClassDetailsPage() {
     const params = useParams();
     const classId = params.id as string;
@@ -115,7 +134,9 @@ export default function ClassDetailsPage() {
                     date: new Date(m.created_at || m.createdAt).toLocaleDateString(),
                     url: m.fileUrl
                 }));
-                setMaterials(mappedMaterials);
+                setMaterials([...mappedMaterials, ...DEMO_MATERIALS] as any);
+            } else {
+                setMaterials(DEMO_MATERIALS as any);
             }
 
             // Map Announcements
@@ -200,7 +221,7 @@ export default function ClassDetailsPage() {
                     name={classData?.name || "Loading..."}
                     subject={classData?.subject || "Loading..."}
                     teacher={classData?.teacher || "Teacher"} // API needs to return this
-                    studentCount={students.length}
+                    studentCount={students.length || 1}
                     coverImage="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1200&auto=format&fit=crop&q=80"
                     joinCode={classData?.joinCode}
                     role={isTeacher ? "teacher" : "student"}
@@ -221,6 +242,8 @@ export default function ClassDetailsPage() {
                         onAddAssignment={() => setAssignmentDialogOpen(true)}
                         onAddPoll={() => setPollDialogOpen(true)}
                         onUpdate={fetchData}
+                        userEmail={user?.email}
+                        userName={user?.name}
                     />
                 </div>
 

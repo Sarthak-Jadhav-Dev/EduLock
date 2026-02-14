@@ -28,25 +28,38 @@ export const CreateMaterialDialog = ({ open, onOpenChange, classId, onSuccess }:
         e.preventDefault();
         setLoading(true);
 
-        const formData = new FormData(e.currentTarget);
+        // Create new FormData manually to control order (Text fields BEFORE File for Multer)
+        const form = e.currentTarget;
+        const formData = new FormData();
 
-        // Add classId to formData
+        // 1. Append text fields first
         formData.append("classId", classId);
 
-        // Ensure default type is set if not provided
-        if (!formData.get("type")) {
-            // Try to determine type from file
-            const file = formData.get("file") as File;
-            let type = "PDF";
-            if (file) {
-                if (file.type.includes("image")) type = "Image";
-                else if (file.type.includes("pdf")) type = "PDF";
-                else type = "Document";
-            }
-            formData.append("type", type);
+        const titleInput = form.elements.namedItem("title") as HTMLInputElement;
+        if (titleInput) formData.append("title", titleInput.value);
+
+        const descInput = form.elements.namedItem("description") as HTMLTextAreaElement;
+        if (descInput) formData.append("description", descInput.value);
+
+        const fileInput = form.elements.namedItem("file") as HTMLInputElement;
+        const file = fileInput?.files?.[0];
+
+        // determine type
+        let type = "Document";
+        if (file) {
+            if (file.type.includes("image")) type = "Image";
+            else if (file.type.includes("pdf")) type = "PDF";
+            else type = "Document";
+        }
+        formData.append("type", type);
+
+        // 2. Append File last
+        if (file) {
+            formData.append("file", file);
         }
 
         try {
+            console.log("Uploading material with:", { classId, title: titleInput.value, type, file: file?.name });
             await uploadMaterial(formData);
             onSuccess?.();
             onOpenChange(false);

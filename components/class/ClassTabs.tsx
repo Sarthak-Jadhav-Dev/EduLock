@@ -30,6 +30,8 @@ interface ClassTabsProps {
     onAddAssignment: () => void;
     onAddPoll: () => void;
     onUpdate?: () => void;
+    userEmail?: string;
+    userName?: string;
 }
 
 export const ClassTabs = ({
@@ -46,6 +48,8 @@ export const ClassTabs = ({
     onAddAssignment,
     onAddPoll,
     onUpdate,
+    userEmail,
+    userName,
 }: ClassTabsProps) => {
     return (
         <Tabs value={activeTab} onValueChange={onTabChange} className="w-full">
@@ -99,7 +103,7 @@ export const ClassTabs = ({
 
             <div className="mt-8">
                 <TabsContent value="materials">
-                    <MaterialsTab materials={materials} />
+                    <MaterialsTab materials={materials} userEmail={userEmail} userName={userName} />
                 </TabsContent>
 
                 <TabsContent value="announcements">

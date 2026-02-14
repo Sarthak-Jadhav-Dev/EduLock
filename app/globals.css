@@ -7,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-poppins);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -468,4 +468,15 @@
   .nav-row__right {
     gap: 1rem;
   }
+}
+
+/* Global Text Selection Override */
+::selection {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+::-moz-selection {
+  background-color: #000000;
+  color: #ffffff;
 }

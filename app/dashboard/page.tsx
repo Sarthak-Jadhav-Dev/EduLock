@@ -105,7 +105,7 @@ export default function DashboardPage() {
                                     name={cls.name}
                                     subject={cls.subject}
                                     teacher={cls.teacher?.name || cls.teacher || "Unknown Teacher"}
-                                    studentCount={cls._count?.students || cls.studentCount || 0}
+                                    studentCount={cls._count?.students || cls.studentCount || "You are enrolled in this class"}
                                     color={cls.color || getClassColor(index)}
                                 />
                             ))}

@@ -16,6 +16,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { MinimalFooter } from "@/components/ui/minimal-footer"
 
 interface DashboardLayoutProps {
     children: React.ReactNode;
@@ -48,6 +49,7 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
                 <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                     {children}
                 </div>
+                <MinimalFooter />
             </SidebarInset>
         </SidebarProvider>
     )

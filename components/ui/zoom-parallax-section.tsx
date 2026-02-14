@@ -3,6 +3,9 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import Lenis from '@studio-freight/lenis'
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
+import { Button } from './button';
+import Link from 'next/link';
+import { Typewriter } from "@/components/ui/typewriter-text";
 
 export default function ZoomParallaxSection() {
 
@@ -24,15 +27,15 @@ export default function ZoomParallaxSection() {
             alt: 'Modern architecture building',
         },
         {
-            src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80',
+            src: 'https://images.unsplash.com/photo-1652172100914-c5b691730756?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: 'Urban cityscape at sunset',
         },
         {
-            src: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=800&fit=crop&crop=entropy&auto=format&q=80',
+            src: 'https://images.unsplash.com/photo-1681908571122-97f349e1ace0?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: 'Abstract geometric pattern',
         },
         {
-            src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80',
+            src: 'https://images.unsplash.com/photo-1617839625591-e5a789593135?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: 'Mountain landscape',
         },
         {
@@ -40,7 +43,7 @@ export default function ZoomParallaxSection() {
             alt: 'Minimalist design elements',
         },
         {
-            src: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80',
+            src: 'https://images.unsplash.com/photo-1735744583234-ff1829001965?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: 'Ocean waves and beach',
         },
         {
@@ -61,12 +64,22 @@ export default function ZoomParallaxSection() {
                         'blur-[30px]',
                     )}
                 />
-                <h1 className="text-center text-4xl font-bold">
-                    See EduLock in Action
-                </h1>
+                <div className="flex flex-col items-center">
+                    <h1 className="text-center text-4xl font-bold">
+                        See EduLock in Action
+                    </h1>
+                    <Link href='/login'><Button className="mt-4">Get Started</Button></Link>
+                </div>
             </div>
             <ZoomParallax images={images} />
-            <div className="h-[50vh]" />
+            <div className="flex h-[50vh] w-full items-center justify-center bg-white text-black">
+                <Typewriter
+                    text={["Welcome to EduLock", "Secure Content Distribution", "Prevent Piracy"]}
+                    speed={100}
+                    loop={true}
+                    className="text-4xl font-bold"
+                />
+            </div>
         </section>
     );
 }

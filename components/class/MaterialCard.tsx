@@ -1,7 +1,7 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { FileText, Download, Clock } from "lucide-react";
+import { FileText, Eye, Clock } from "lucide-react";
 
 export interface Material {
     id: string;
@@ -37,8 +37,8 @@ export const MaterialCard = ({ material }: { material: Material }) => {
                     <span>{material.date}</span>
                 </div>
                 <Button size="sm" variant="ghost" className="h-8 gap-2 rounded-lg text-xs font-medium hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-900/20">
-                    <Download className="h-3.5 w-3.5" />
-                    Download
+                    <Eye className="h-3.5 w-3.5" />
+                    View
                 </Button>
             </CardFooter>
         </Card>

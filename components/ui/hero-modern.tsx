@@ -2,79 +2,13 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { NavBarDemo } from "./navbar-demo";
 
 const STYLE_ID = "hero3-animations";
 
-const getRootTheme = () => {
-    if (typeof document === "undefined") {
-        if (typeof window !== "undefined" && window.matchMedia) {
-            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-        }
-        return "light";
-    }
-
-    const root = document.documentElement;
-    if (root.classList.contains("dark")) return "dark";
-    if (root.getAttribute("data-theme") === "dark" || root.dataset?.theme === "dark") return "dark";
-    if (root.classList.contains("light")) return "light";
-
-    if (typeof window !== "undefined" && window.matchMedia) {
-        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    }
-
-    return "light";
-};
-
-const useThemeSync = () => {
-    const [theme, setTheme] = useState(() => getRootTheme());
-
-    useEffect(() => {
-        if (typeof document === "undefined") return;
-
-        const sync = () => {
-            const next = getRootTheme();
-            setTheme((prev) => (prev === next ? prev : next));
-        };
-
-        sync();
-
-        const observer = new MutationObserver(sync);
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ["class", "data-theme"],
-        });
-
-        const media =
-            typeof window !== "undefined" && window.matchMedia
-                ? window.matchMedia("(prefers-color-scheme: dark)")
-                : null;
-
-        const onMedia = () => sync();
-        media?.addEventListener("change", onMedia);
-
-        const onStorage = (event: StorageEvent) => {
-            if (event.key === "hero-theme" || event.key === "bento-theme") sync();
-        };
-
-        if (typeof window !== "undefined") {
-            window.addEventListener("storage", onStorage);
-        }
-
-        return () => {
-            observer.disconnect();
-            media?.removeEventListener("change", onMedia);
-            if (typeof window !== "undefined") {
-                window.removeEventListener("storage", onStorage);
-            }
-        };
-    }, []);
-
-    return [theme, setTheme] as const;
-};
-
-const DeckGlyph = ({ theme = "dark" }) => {
-    const stroke = theme === "dark" ? "#f5f5f5" : "#111111";
-    const fill = theme === "dark" ? "rgba(255,255,255,0.08)" : "rgba(17,17,17,0.08)";
+const DeckGlyph = () => {
+    const stroke = "#111111";
+    const fill = "rgba(17,17,17,0.08)";
 
     return (
         <svg viewBox="0 0 120 120" className="h-16 w-16" aria-hidden>
@@ -112,7 +46,7 @@ const DeckGlyph = ({ theme = "dark" }) => {
 };
 
 function HeroOrbitDeck() {
-    const [theme, setTheme] = useThemeSync();
+    const theme = "light";
     const [visible, setVisible] = useState(false);
     const [mode, setMode] = useState<"strategy" | "execution">("strategy");
     const sectionRef = useRef<HTMLElement>(null);
@@ -183,68 +117,29 @@ function HeroOrbitDeck() {
         return () => observer.disconnect();
     }, []);
 
-    const toggleTheme = () => {
-        if (typeof document === "undefined") return;
-        const root = document.documentElement;
-        const current = getRootTheme();
-        const next = current === "dark" ? "light" : "dark";
-        root.classList.toggle("dark", next === "dark");
-        root.classList.toggle("light", next === "light");
-        root.setAttribute("data-theme", next);
-        if (typeof window !== "undefined") {
-            try {
-                window.localStorage?.setItem("hero-theme", next);
-            } catch (_err) {
-                /* ignore */
-            }
-        }
-        setTheme(next);
-    };
-
     const palette = useMemo(
-        () =>
-            theme === "dark"
-                ? {
-                    surface: "bg-black text-white",
-                    subtle: "text-white/60",
-                    border: "border-white/12",
-                    card: "bg-white/6",
-                    accent: "bg-white/12",
-                    glow: "rgba(255,255,255,0.14)",
-                    background: {
-                        color: "#040404",
-                        layers: [
-                            "radial-gradient(ellipse 80% 60% at 10% -10%, rgba(255,255,255,0.15), transparent 60%)",
-                            "radial-gradient(ellipse 90% 70% at 90% -20%, rgba(120,120,120,0.12), transparent 70%)",
-                        ],
-                        dots:
-                            "radial-gradient(circle at 25% 25%, rgba(250,250,250,0.08) 0.7px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(250,250,250,0.08) 0.7px, transparent 1px)",
-                    },
-                }
-                : {
-                    surface: "bg-white text-neutral-950",
-                    subtle: "text-neutral-600",
-                    border: "border-neutral-200/80",
-                    card: "bg-neutral-100/80",
-                    accent: "bg-neutral-100",
-                    glow: "rgba(17,17,17,0.08)",
-                    background: {
-                        color: "#f5f5f4",
-                        layers: [
-                            "radial-gradient(ellipse 80% 60% at 10% -10%, rgba(15,15,15,0.12), transparent 60%)",
-                            "radial-gradient(ellipse 90% 70% at 90% -20%, rgba(15,15,15,0.08), transparent 70%)",
-                        ],
-                        dots:
-                            "radial-gradient(circle at 25% 25%, rgba(17,17,17,0.12) 0.7px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(17,17,17,0.08) 0.7px, transparent 1px)",
-                    },
-                },
-        [theme]
+        () => ({
+            surface: "bg-white text-zinc-950",
+            subtle: "text-zinc-500",
+            border: "border-zinc-200",
+            card: "bg-white shadow-[0_4px_20px_-12px_rgba(0,0,0,0.1)]",
+            accent: "bg-zinc-100",
+            glow: "rgba(0,0,0,0.05)",
+            background: {
+                color: "#ffffff",
+                layers: [
+                    "radial-gradient(ellipse 80% 60% at 50% -20%, rgba(120,119,198,0.05), transparent 60%)",
+                    "radial-gradient(ellipse 80% 60% at 50% 120%, rgba(120,119,198,0.05), transparent 60%)",
+                ],
+                dots: "radial-gradient(circle at 25% 25%, rgba(0,0,0,0.05) 1px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.05) 1px, transparent 1px)",
+            },
+        }),
+        []
     );
 
     const metrics = [
         { label: "Encryption", value: "AES-256" },
         { label: "Files Secured", value: "10K+" },
-        { label: "Uptime", value: "99.9%" },
     ];
 
     const modes = useMemo(
@@ -306,13 +201,19 @@ function HeroOrbitDeck() {
         target.style.removeProperty("--hero3-y");
     };
 
+    const showcaseDownImage = {
+        src: "https://gesrepair.com/wp-content/uploads/bigstock-140745698.jpg",
+        alt: "Abstract tech visualization",
+    }
+
     const showcaseImage = {
-        src: "https://images.unsplash.com/photo-1481487484168-9b930d55206d?q=80&w=2000&auto=format&fit=crop",
+        src: "https://www.bmwgroup.com/en/news/general/2025/quantum-computing/_jcr_content/main/newsarticle.coreimg.jpeg/1739351859908/quantencomputing-header-2560x896.jpeg",
         alt: "Abstract tech visualization",
     };
 
     return (
         <div className={`relative isolate min-h-screen w-full transition-colors duration-700 ${palette.surface}`}>
+            <NavBarDemo />
             <div
                 className="pointer-events-none absolute inset-0 -z-30"
                 style={{
@@ -333,10 +234,7 @@ function HeroOrbitDeck() {
             <div
                 className="pointer-events-none absolute inset-0 -z-10"
                 style={{
-                    background:
-                        theme === "dark"
-                            ? "radial-gradient(60% 50% at 50% 10%, rgba(255,255,255,0.18), transparent 70%)"
-                            : "radial-gradient(60% 50% at 50% 10%, rgba(17,17,17,0.12), transparent 70%)",
+                    background: "radial-gradient(60% 50% at 50% 10%, rgba(17,17,17,0.05), transparent 70%)",
                     filter: "blur(22px)",
                 }}
             />
@@ -352,13 +250,6 @@ function HeroOrbitDeck() {
                             <span className={`inline-flex items-center gap-2 rounded-full border px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.4em] ${palette.border} ${palette.accent}`}>
                                 Secure Content Platform
                             </span>
-                            <button
-                                type="button"
-                                onClick={toggleTheme}
-                                className={`rounded-full border px-4 py-1 text-[10px] font-semibold uppercase tracking-[0.35em] transition duration-500 ${palette.border}`}
-                            >
-                                {theme === "dark" ? "Light" : "Dark"} mode
-                            </button>
                         </div>
                         <div className="space-y-6">
                             <h1 className="text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
@@ -377,7 +268,7 @@ function HeroOrbitDeck() {
                                 <span className="opacity-60">∙</span>
                                 <span>End-to-End Encrypted</span>
                             </div>
-                            <div className={`flex divide-x divide-white/10 overflow-hidden rounded-full border text-xs uppercase tracking-[0.35em] ${palette.border}`}>
+                            <div className={`flex items-center divide-x divide-white/10 overflow-hidden rounded-full border text-xs uppercase tracking-[0.35em] ${palette.border}`}>
                                 {metrics.map((metric) => (
                                     <div key={metric.label} className="flex flex-col px-5 py-3">
                                         <span className={`text-[11px] ${palette.subtle}`}>{metric.label}</span>
@@ -394,7 +285,7 @@ function HeroOrbitDeck() {
                                 <p className="text-xs uppercase tracking-[0.35em]">Mode</p>
                                 <h2 className="text-xl font-semibold tracking-tight">{activeMode.title}</h2>
                             </div>
-                            <DeckGlyph theme={theme} />
+                            <DeckGlyph />
                         </div>
                         <p className={`text-sm leading-relaxed ${palette.subtle}`}>{activeMode.description}</p>
                         <div className="flex gap-2">
@@ -465,6 +356,18 @@ function HeroOrbitDeck() {
                                 Secure architecture
                             </span>
                         </figcaption>
+                        <div className="relative w-full pb-[120%] sm:pb-[90%] lg:pb-[72%]">
+                            <Image
+                                src={showcaseDownImage.src}
+                                alt={showcaseDownImage.alt}
+                                fill
+                                className="absolute inset-0 h-full w-full object-cover grayscale transition duration-700 ease-out hover:scale-[1.03]"
+                            />
+                            <span className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/40 via-transparent to-black/50 mix-blend-soft-light dark:from-white/10" />
+                            <div className="pointer-events-none absolute inset-0 border border-white/10 mix-blend-overlay dark:border-white/20" />
+                            <span className="pointer-events-none absolute -left-16 top-16 h-40 w-40 rounded-full border border-white/15 opacity-70 motion-safe:animate-[hero3-glow_9s_ease-in-out_infinite]" />
+                            <span className="pointer-events-none absolute -right-12 bottom-16 h-48 w-48 rounded-full border border-white/10 opacity-40 motion-safe:animate-[hero3-drift_12s_ease-in-out_infinite]" />
+                        </div>
                     </figure>
 
                     <aside className={`order-3 flex flex-col gap-6 rounded-3xl border p-8 transition ${palette.border} ${palette.card} xl:order-3`}>
@@ -484,10 +387,7 @@ function HeroOrbitDeck() {
                                     <div
                                         className="pointer-events-none absolute inset-0 opacity-0 transition duration-500 group-hover:opacity-100"
                                         style={{
-                                            background:
-                                                theme === "dark"
-                                                    ? "radial-gradient(190px circle at var(--hero3-x, 50%) var(--hero3-y, 50%), rgba(255,255,255,0.18), transparent 72%)"
-                                                    : "radial-gradient(190px circle at var(--hero3-x, 50%) var(--hero3-y, 50%), rgba(17,17,17,0.12), transparent 72%)",
+                                            background: "radial-gradient(190px circle at var(--hero3-x, 50%) var(--hero3-y, 50%), rgba(17,17,17,0.12), transparent 72%)",
                                         }}
                                     />
                                     <div className="flex items-center justify-between">

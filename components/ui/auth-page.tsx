@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Button } from './button';
 import { Input } from './input';
 import { cn } from '@/lib/utils';
+import { NavBarDemo } from './navbar-demo';
 import {
     AtSign,
     ChevronLeft,
@@ -67,11 +68,11 @@ export function AuthPage() {
 
     return (
         <main className="relative md:h-screen md:overflow-hidden lg:grid lg:grid-cols-2">
+            <NavBarDemo/>
             <div className="bg-muted/60 relative hidden h-full flex-col border-r p-10 lg:flex">
                 <div className="from-background absolute inset-0 z-10 bg-linear-to-t to-transparent" />
                 <div className="z-10 flex items-center gap-2">
-                    <Grid2x2 className="size-6" />
-                    <p className="text-xl font-semibold">Asme</p>
+                    <p className="text-xl font-semibold">EduLock</p>
                 </div>
                 <div className="z-10 mt-auto">
                     <blockquote className="space-y-2">
@@ -107,7 +108,7 @@ export function AuthPage() {
                 <div className="mx-auto space-y-4 sm:w-sm">
                     <div className="flex items-center gap-2 lg:hidden">
                         <Grid2x2 className="size-6" />
-                        <p className="text-xl font-semibold">Asme</p>
+                        <p className="text-xl font-semibold">EduLock</p>
                     </div>
                     <div className="flex flex-col space-y-1">
                         <h1 className="font-heading text-2xl font-bold tracking-wide">
@@ -115,7 +116,7 @@ export function AuthPage() {
                         </h1>
                         <p className="text-muted-foreground text-base">
                             {step === 'email'
-                                ? 'login or create your asme account.'
+                                ? 'login or create your EduLock account.'
                                 : `We sent a code to ${email}`}
                         </p>
                     </div>

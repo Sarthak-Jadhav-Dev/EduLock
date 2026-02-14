@@ -1,12 +1,12 @@
 import * as React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, HTMLMotionProps } from "framer-motion";
 import { X } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
 // Define the props for the AlertCard component
-interface AlertCardProps extends React.HTMLAttributes<HTMLDivElement> {
+interface AlertCardProps extends HTMLMotionProps<"div"> {
     icon?: React.ReactNode;
     title: string;
     description: string;
@@ -64,7 +64,7 @@ const AlertCard = React.forwardRef<HTMLDivElement, AlertCardProps>(
                         ref={ref}
                         className={cn(
                             "relative w-full max-w-sm overflow-hidden rounded-2xl p-6 shadow-2xl",
-                            "bg-destructive text-destructive-foreground", // Theming with shadcn variables
+                            "bg-linear-to-br from-green-400 to-yellow-200 text-green-950",
                             className
                         )}
                         variants={cardVariants}
@@ -111,14 +111,14 @@ const AlertCard = React.forwardRef<HTMLDivElement, AlertCardProps>(
                         </motion.h3>
 
                         {/* Description */}
-                        <motion.p variants={itemVariants} className="mt-2 text-sm text-destructive-foreground/80 max-w-[80%]">
+                        <motion.p variants={itemVariants} className="mt-2 text-sm text-green-900/80 max-w-[80%]">
                             {description}
                         </motion.p>
 
                         {/* Action Button */}
                         <motion.div variants={itemVariants} className="mt-6">
                             <Button
-                                className="w-full rounded-full bg-primary-foreground py-6 text-base font-semibold text-primary shadow-lg transition-transform duration-200 hover:bg-primary-foreground/90 active:scale-95"
+                                className="w-full rounded-full bg-white py-6 text-base font-semibold text-green-700 shadow-lg transition-transform duration-200 hover:bg-white/90 active:scale-95"
                                 onClick={onButtonClick}
                             >
                                 {buttonText}

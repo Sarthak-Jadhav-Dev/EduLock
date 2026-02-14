@@ -3,8 +3,8 @@ import api from './api';
 export const uploadMaterial = async (data: FormData) => {
     const response = await api.post('/material/upload', data, {
         headers: {
-            'Content-Type': 'multipart/form-data',
-        },
+            'Content-Type': undefined as any,
+        }
     });
     return response.data;
 };

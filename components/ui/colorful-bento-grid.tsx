@@ -1,5 +1,4 @@
 
-import { cn } from "@/lib/utils";
 import { Gift } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -117,7 +116,7 @@ export default function ColorfulBentoGrid() {
                 >
                     <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity">
                         <Image
-                            src="https://images.unsplash.com/photo-1499750310159-5254f4cc1529?q=80&w=1000&auto=format&fit=crop"
+                            src="https://images.unsplash.com/photo-1762182403153-87466da6ce1e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt="Blog background"
                             fill
                             className="object-cover"

@@ -1,13 +1,15 @@
 "use client"
 
 import * as React from "react"
+import Link from "next/link"
 import {
     BookOpen,
     LayoutDashboard,
-    Settings,
+    Home,
     User2,
     ChevronUp,
-    LogOut
+    LogOut,
+    Info,
 } from "lucide-react"
 
 import {
@@ -39,18 +41,31 @@ const items = [
         icon: LayoutDashboard,
     },
     {
-        title: "My Classes",
-        url: "/dashboard/classes",
-        icon: BookOpen,
+        title: "Home",
+        url: "/",
+        icon: Home,
     },
     {
-        title: "Settings",
-        url: "/dashboard/settings",
-        icon: Settings,
+        title: "About",
+        url: "/about",
+        icon: Info,
     },
 ]
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const [user, setUser] = React.useState<{ name: string; email: string } | null>(null)
+
+    React.useEffect(() => {
+        const storedUser = localStorage.getItem("user")
+        if (storedUser) {
+            try {
+                setUser(JSON.parse(storedUser))
+            } catch (error) {
+                console.error("Failed to parse user data:", error)
+            }
+        }
+    }, [])
+
     return (
         <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
@@ -99,12 +114,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                     className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                                 >
                                     <Avatar className="h-8 w-8 rounded-lg">
-                                        <AvatarImage src="https://github.com/shadcn.png" alt="User" />
-                                        <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                                        <AvatarImage src="https://github.com/shadcn.png" alt={user?.name || "User"} />
+                                        <AvatarFallback className="rounded-lg">
+                                            {user?.name
+                                                ? user.name
+                                                    .split(" ")
+                                                    .map((n) => n[0])
+                                                    .join("")
+                                                    .toUpperCase()
+                                                    .slice(0, 2)
+                                                : "CN"}
+                                        </AvatarFallback>
                                     </Avatar>
                                     <div className="grid flex-1 text-left text-sm leading-tight">
-                                        <span className="truncate font-semibold">User Name</span>
-                                        <span className="truncate text-xs">user@example.com</span>
+                                        <span className="truncate font-semibold">{user?.name || "User Name"}</span>
+                                        <span className="truncate text-xs">{user?.email || "user@example.com"}</span>
                                     </div>
                                     <ChevronUp className="ml-auto size-4" />
                                 </SidebarMenuButton>
@@ -113,14 +137,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 side="top"
                                 className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
                             >
-                                <DropdownMenuItem>
+                                <Link href="/dashboard/profile"><DropdownMenuItem>
                                     <User2 className="mr-2 h-4 w-4" />
                                     <span>Profile</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <Settings className="mr-2 h-4 w-4" />
-                                    <span>Settings</span>
-                                </DropdownMenuItem>
+                                </DropdownMenuItem></Link>
                                 <DropdownMenuItem>
                                     <LogOut className="mr-2 h-4 w-4" />
                                     <span>Log out</span>

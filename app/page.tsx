@@ -1,4 +1,3 @@
-import Image from "next/image";
 import HeroSection from "@/components/ui/hero-section";
 import ColorfulBentoGrid from "@/components/ui/colorful-bento-grid";
 import ZoomParallaxSection from "@/components/ui/zoom-parallax-section";
