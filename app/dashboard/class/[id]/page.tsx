@@ -151,15 +151,15 @@ export default function ClassDetailsPage() {
             // Map Polls
             if (pollsRes.status === "fulfilled") {
                 const mappedPolls = (pollsRes.value || []).map((p: any) => {
-                    const totalVotes = p.options?.reduce((sum: number, opt: any) => sum + (opt.votes || 0), 0) || 0;
+                    const totalVotes = p.options?.reduce((sum: number, opt: any) => sum + (parseInt(opt.votes) || 0), 0) || 0;
                     return {
                         id: p.id,
                         question: p.question,
-                        options: p.options?.map((o: any) => ({
+                        options: (Array.isArray(p.options) ? p.options : []).map((o: any) => ({
                             id: o.id || o._id,
-                            text: o.text,
-                            votes: o.votes || 0
-                        })) || [],
+                            text: o.text || o.option_text,
+                            votes: parseInt(o.votes) || 0
+                        })),
                         totalVotes,
                         userVoted: p.userVoted
                     };

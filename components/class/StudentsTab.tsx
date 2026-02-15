@@ -34,36 +34,44 @@ export const StudentsTab = ({ students }: { students: Student[] }) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {students.map((student) => (
-                        <TableRow key={student.id} className="group cursor-pointer hover:bg-slate-50/50 dark:hover:bg-slate-900/50">
-                            <TableCell className="font-medium">
-                                <div className="flex items-center gap-3">
-                                    <Avatar className="h-9 w-9 border">
-                                        <AvatarImage src={student.avatar} />
-                                        <AvatarFallback>{student.name[0]}</AvatarFallback>
-                                    </Avatar>
-                                    <span>{student.name}</span>
-                                </div>
-                            </TableCell>
-                            <TableCell className="text-muted-foreground">{student.email}</TableCell>
-                            <TableCell>{student.joinedDate}</TableCell>
-                            <TableCell>
-                                <Badge variant={student.status === "Active" ? "default" : "secondary"} className="rounded-md font-normal">
-                                    {student.status}
-                                </Badge>
-                            </TableCell>
-                            <TableCell className="text-right">
-                                <div className="flex items-center justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-                                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                                        <Mail className="h-4 w-4 text-muted-foreground" />
-                                    </Button>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8">
-                                        <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
-                                    </Button>
-                                </div>
+                    {students.length === 0 ? (
+                        <TableRow>
+                            <TableCell colSpan={5} className="h-24 text-center text-muted-foreground">
+                                No students enrolled in this class yet.
                             </TableCell>
                         </TableRow>
-                    ))}
+                    ) : (
+                        students.map((student) => (
+                            <TableRow key={student.id} className="group cursor-pointer hover:bg-slate-50/50 dark:hover:bg-slate-900/50">
+                                <TableCell className="font-medium text-foreground">
+                                    <div className="flex items-center gap-3">
+                                        <Avatar className="h-9 w-9 border">
+                                            <AvatarImage src={student.avatar} />
+                                            <AvatarFallback>{student.name[0]}</AvatarFallback>
+                                        </Avatar>
+                                        <span>{student.name}</span>
+                                    </div>
+                                </TableCell>
+                                <TableCell className="text-muted-foreground">{student.email}</TableCell>
+                                <TableCell>{student.joinedDate}</TableCell>
+                                <TableCell>
+                                    <Badge variant={student.status === "Active" ? "default" : "secondary"} className="rounded-md font-normal">
+                                        {student.status}
+                                    </Badge>
+                                </TableCell>
+                                <TableCell className="text-right">
+                                    <div className="flex items-center justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
+                                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                                            <Mail className="h-4 w-4 text-muted-foreground" />
+                                        </Button>
+                                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                                            <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
+                                        </Button>
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    )}
                 </TableBody>
             </Table>
         </div>

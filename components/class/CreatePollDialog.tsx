@@ -23,6 +23,7 @@ interface CreatePollDialogProps {
 export const CreatePollDialog = ({ open, onOpenChange, classId, onSuccess }: CreatePollDialogProps) => {
     const [loading, setLoading] = useState(false);
     const [options, setOptions] = useState(["", ""]);
+    const [correctOptionIndex, setCorrectOptionIndex] = useState<number | null>(null);
 
     const addOption = () => {
         setOptions([...options, ""]);
@@ -33,6 +34,10 @@ export const CreatePollDialog = ({ open, onOpenChange, classId, onSuccess }: Cre
             const newOptions = [...options];
             newOptions.splice(index, 1);
             setOptions(newOptions);
+            if (correctOptionIndex === index) setCorrectOptionIndex(null);
+            if (correctOptionIndex !== null && correctOptionIndex > index) {
+                setCorrectOptionIndex(correctOptionIndex - 1);
+            }
         }
     };
 
@@ -49,13 +54,23 @@ export const CreatePollDialog = ({ open, onOpenChange, classId, onSuccess }: Cre
         const formData = new FormData(e.currentTarget);
         const question = formData.get("question") as string;
 
-        // Filter out empty options
-        const validOptions = options.filter(opt => opt.trim() !== "");
+        // Filter out empty options and process correct answer
+        const validOptions = options
+            .filter(opt => opt.trim() !== "")
+            .map((opt, index) => {
+                if (index === correctOptionIndex) {
+                    return opt + "::CORRECT";
+                }
+                return opt;
+            });
 
         try {
             await createPoll({ classId, question, options: validOptions });
             onSuccess?.();
             onOpenChange(false);
+            // Reset form
+            setOptions(["", ""]);
+            setCorrectOptionIndex(null);
         } catch (error) {
             console.error("Failed to create poll:", error);
         } finally {
@@ -82,12 +97,23 @@ export const CreatePollDialog = ({ open, onOpenChange, classId, onSuccess }: Cre
                         <div className="space-y-3">
                             <Label>Options</Label>
                             {options.map((option, index) => (
-                                <div key={index} className="flex gap-2">
+                                <div key={index} className="flex gap-2 items-center">
+                                    <div className="flex h-10 w-10 items-center justify-center">
+                                        <input
+                                            type="radio"
+                                            name="correctOption"
+                                            checked={correctOptionIndex === index}
+                                            onChange={() => setCorrectOptionIndex(index)}
+                                            className="h-4 w-4 cursor-pointer accent-primary"
+                                            title="Mark as correct answer"
+                                        />
+                                    </div>
                                     <Input
                                         value={option}
                                         onChange={(e) => handleOptionChange(index, e.target.value)}
                                         placeholder={`Option ${index + 1}`}
                                         required
+                                        className={correctOptionIndex === index ? "border-green-500 ring-1 ring-green-500" : ""}
                                     />
                                     {options.length > 2 && (
                                         <Button
